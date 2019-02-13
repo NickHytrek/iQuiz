@@ -26,7 +26,11 @@ class QuizDataSource : NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: <#T##String#>)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "QuizMath")!
+        
+        cell.textLabel?.text = titles[0]
+        
+        return cell
     }
     
     
@@ -48,5 +52,10 @@ class ViewController: UIViewController, UITableViewDelegate {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
 }
 

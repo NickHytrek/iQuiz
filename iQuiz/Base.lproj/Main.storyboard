@@ -18,9 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NKU-j3-gil">
-                                <rect key="frame" x="16" y="20" width="343" height="627"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NKU-j3-gil">
+                                <rect key="frame" x="16" y="89" width="343" height="558"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="QuizMath" textLabel="T6U-cJ-jDg" detailTextLabel="awf-ZU-cnq" imageView="wV4-gl-7uL" style="IBUITableViewCellStyleSubtitle" id="dfI-pq-aBX">
@@ -110,8 +109,28 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSb-z4-FWX">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Settings" id="aE4-40-KeG">
+                                        <connections>
+                                            <action selector="toolBarSettings:" destination="BYZ-38-t0r" id="U6f-vB-mQX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="NKU-j3-gil" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="C91-Mf-Zg2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NKU-j3-gil" secondAttribute="trailing" constant="16" id="G52-xB-GiK"/>
+                            <constraint firstItem="QSb-z4-FWX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="H4d-aI-lUI"/>
+                            <constraint firstItem="QSb-z4-FWX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PtU-iU-bDY"/>
+                            <constraint firstItem="QSb-z4-FWX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="n6L-ST-iV8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NKU-j3-gil" secondAttribute="bottom" constant="20" id="ppg-T3-07z"/>
+                            <constraint firstItem="NKU-j3-gil" firstAttribute="top" secondItem="QSb-z4-FWX" secondAttribute="bottom" constant="25" id="u9C-FV-Dhz"/>
+                            <constraint firstItem="NKU-j3-gil" firstAttribute="top" secondItem="QSb-z4-FWX" secondAttribute="bottom" constant="25" id="yPf-Xi-qJS"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
