@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
     let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals can you mix to create explosions?!"]
-    let quizImages : [UIImage] = [math.jpg, hero.png, science.png]
+    let quizImages : [UIImage] = [UIImage(named: "math")!, UIImage(named: "hero")!, UIImage(named: "science")!]
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizTitle.count
@@ -27,6 +27,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myCell = tableView.dequeueReusableCell(withIdentifier: "quizCell", for: indexPath)
         myCell.textLabel?.text = quizTitle[indexPath.row]
+        myCell.imageView?.image = quizImages[indexPath.row]
         return myCell
     }
     
