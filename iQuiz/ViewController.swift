@@ -27,6 +27,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myCell = tableView.dequeueReusableCell(withIdentifier: "quizCell", for: indexPath)
         myCell.textLabel?.text = quizTitle[indexPath.row]
+        myCell.detailTextLabel?.text = quizSubtitle[indexPath.row]
         myCell.imageView?.image = quizImages[indexPath.row]
         return myCell
     }
