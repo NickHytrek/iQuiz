@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     
     let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
-    let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals can you mix to create explosions?!"]
+    let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals mix to create explosions?!"]
     let quizImages : [UIImage] = [UIImage(named: "math")!, UIImage(named: "hero")!, UIImage(named: "science")!]
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
