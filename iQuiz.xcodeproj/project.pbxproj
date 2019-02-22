@@ -12,6 +12,7 @@
 		9DCA3895221498FB007A38AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA3893221498FB007A38AA /* Main.storyboard */; };
 		9DCA3897221498FC007A38AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA3896221498FC007A38AA /* Assets.xcassets */; };
 		9DCA389A221498FC007A38AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA3898221498FC007A38AA /* LaunchScreen.storyboard */; };
+		9DCF4D62221F8002003CDCAC /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCF4D61221F8002003CDCAC /* QuestionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		9DCA3896221498FC007A38AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DCA3899221498FC007A38AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DCA389B221498FC007A38AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DCF4D61221F8002003CDCAC /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				9DCA388F221498FB007A38AA /* AppDelegate.swift */,
 				9DCA3891221498FB007A38AA /* ViewController.swift */,
+				9DCF4D61221F8002003CDCAC /* QuestionsViewController.swift */,
 				9DCA3893221498FB007A38AA /* Main.storyboard */,
 				9DCA3896221498FC007A38AA /* Assets.xcassets */,
 				9DCA3898221498FC007A38AA /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				9DCA3892221498FB007A38AA /* ViewController.swift in Sources */,
 				9DCA3890221498FB007A38AA /* AppDelegate.swift in Sources */,
+				9DCF4D62221F8002003CDCAC /* QuestionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

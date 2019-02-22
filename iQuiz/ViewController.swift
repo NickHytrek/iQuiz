@@ -9,12 +9,12 @@
 import UIKit
 
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var quizToGoTo : String = ""
     
     let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
     let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals mix to create explosions?!"]
@@ -30,6 +30,25 @@ class ViewController: UIViewController, UITableViewDataSource {
         myCell.detailTextLabel?.text = quizSubtitle[indexPath.row]
         myCell.imageView?.image = quizImages[indexPath.row]
         return myCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            quizToGoTo = "Math"
+        }
+        else if indexPath.row == 1 {
+            quizToGoTo = "Marvel Super Heroes"
+        }
+        else {
+            quizToGoTo = "Science"
+        }
+        
+        self.performSegue(withIdentifier: "quizQuestions", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let quiz = segue.destination as! QuestionsViewController
+        quiz.currentQuiz = quizToGoTo
     }
     
     
