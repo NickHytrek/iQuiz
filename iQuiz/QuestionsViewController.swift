@@ -12,12 +12,19 @@ class QuestionsViewController: UIViewController {
 
     @IBOutlet weak var questionLabel: UILabel!
     var currentQuiz : String? = ""
+    let mathQuestions : [String] = ["What is 2 + 2?"]
+    let mathAnswers : [String] = ["1", "2", "3", "4"]
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        questionLabel.text = currentQuiz
+        if currentQuiz == "Math" {
+            questionLabel.text = mathQuestions[0]
+        }
     }
     
 
