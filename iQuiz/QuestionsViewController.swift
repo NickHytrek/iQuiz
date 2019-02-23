@@ -18,6 +18,7 @@ class QuestionsViewController: UIViewController {
     var currentQuiz : String? = ""
     let mathQuestions : [String] = ["What is 2 + 2?"]
     let mathAnswers : [String] = ["1", "2", "3", "4"]
+    let correctMathAnswers : [String] = ["4"]
     var selectedAnswer : String = ""
     
     
@@ -69,5 +70,14 @@ class QuestionsViewController: UIViewController {
         buttonAnswerThree.backgroundColor = UIColor.white
     }
     
+    @IBAction func touchupSubmitAnswer(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "goToAnswer", sender: nil)
+    }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let answer = segue.destination as! AnswerViewController
+        answer.correctAnswer = correctMathAnswers[0]
+        answer.question = mathQuestions[0]
+        answer.userAnswer = selectedAnswer
+    }
 }
