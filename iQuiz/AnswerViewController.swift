@@ -17,6 +17,8 @@ class AnswerViewController: UIViewController {
     var question : String = ""
     var correctAnswer : String = ""
     var userAnswer : String = ""
+    var total : [Int] = [0, 0]
+    var questionCount : Int = 0
     
 
     override func viewDidLoad() {
@@ -25,14 +27,26 @@ class AnswerViewController: UIViewController {
         // Do any additional setup after loading the view.
         questionLabel.text = question
         correctAnswerLabel.text = correctAnswer
+        questionCount = questionCount + 1
         if userAnswer == correctAnswer {
             resultLabel.text = "RIGHT!"
+            total[0] = total[0] + 1
         }
         else {
             resultLabel.text = "WRONG!"
         }
     }
     
-
+    @IBAction func touchupGoNext(_ sender: UIButton) {
+        if questionCount == total[1] {
+            self.performSegue(withIdentifier: "goToFinish" , sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let finish = segue.destination as! FinishViewController
+        finish.total = total
+    }
+    
 
 }

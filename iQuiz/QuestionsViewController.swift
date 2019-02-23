@@ -20,6 +20,8 @@ class QuestionsViewController: UIViewController {
     let mathAnswers : [String] = ["1", "2", "3", "4"]
     let correctMathAnswers : [String] = ["4"]
     var selectedAnswer : String = ""
+    var total : [Int] = [0, 0]
+    var questionCount = 0
     
     
     
@@ -29,7 +31,9 @@ class QuestionsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
         if currentQuiz == "Math" {
+            total[1] = mathQuestions.count
             questionLabel.text = mathQuestions[0]
             buttonAnswerOne.setTitle(mathAnswers[0], for: UIControl.State.normal)
             buttonAnswerTwo.setTitle(mathAnswers[1], for: UIControl.State.normal)
@@ -79,5 +83,7 @@ class QuestionsViewController: UIViewController {
         answer.correctAnswer = correctMathAnswers[0]
         answer.question = mathQuestions[0]
         answer.userAnswer = selectedAnswer
+        answer.total = total
+        answer.questionCount = questionCount
     }
 }
