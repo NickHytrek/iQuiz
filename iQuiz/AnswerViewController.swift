@@ -16,9 +16,10 @@ class AnswerViewController: UIViewController {
     
     var question : String = ""
     var correctAnswer : String = ""
-    var userAnswer : String = ""
+    //var userAnswer : String = ""
     var total : [Int] = [0, 0]
     var questionCount : Int = 0
+    var correct : Bool = false
     
 
     override func viewDidLoad() {
@@ -28,7 +29,7 @@ class AnswerViewController: UIViewController {
         questionLabel.text = question
         correctAnswerLabel.text = correctAnswer
         questionCount = questionCount + 1
-        if userAnswer == correctAnswer {
+        if correct {
             resultLabel.text = "RIGHT!"
             total[0] = total[0] + 1
         }
