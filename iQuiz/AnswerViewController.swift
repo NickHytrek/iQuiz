@@ -16,11 +16,11 @@ class AnswerViewController: UIViewController {
     
     var question : String = ""
     var correctAnswer : String = ""
-    //var userAnswer : String = ""
     var total : [Int] = [0, 0]
     var questionCount : Int = 0
     var correct : Bool = false
-    
+    var segueIdentifier : String = ""
+    var currentQuiz : String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +40,28 @@ class AnswerViewController: UIViewController {
     
     @IBAction func touchupGoNext(_ sender: UIButton) {
         if questionCount == total[1] {
+            segueIdentifier = "goToFinish"
             self.performSegue(withIdentifier: "goToFinish" , sender: nil)
+        }
+        else {
+            segueIdentifier = "goToNextQuestion"
+            self.performSegue(withIdentifier: "goToNextQuestion", sender: nil)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let finish = segue.destination as! FinishViewController
-        finish.total = total
+        if segueIdentifier == "goToFinish" {
+            let finish = segue.destination as! FinishViewController
+            finish.total = total
+        }
+        else if segueIdentifier == "goToNextQuestion" {
+            let nextQuestion = segue.destination as! QuestionsViewController
+            print("answer question count - \(questionCount)")
+            print("answer total - \(total)")
+            nextQuestion.questionCount = questionCount
+            nextQuestion.total = total
+            nextQuestion.currentQuiz = currentQuiz
+        }
     }
     
 

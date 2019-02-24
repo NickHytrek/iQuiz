@@ -17,14 +17,14 @@ class QuestionsViewController: UIViewController {
     @IBOutlet weak var buttonAnswerFour: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     var currentQuiz : String? = ""
-    let mathQuestions : [String] = ["What is 2 + 2?"]
-    let mathAnswers : [String] = ["1", "2", "3", "4"]
-    let correctMathAnswers : [String] = ["4"]
+    let mathQuestions : [String] = ["What is 2 + 2?", "What is 4 + 4?"]
+    let mathAnswers : [[String]] = [["1", "2", "3", "4"], ["8", "7", "6", "5"]]
+    let correctMathAnswers : [String] = ["4","1"]
     let marvelQuestions : [String] = ["Who plays Deadpool in the movie?"]
-    let marvelAnswers : [String] = ["Josh Reynolds", "Roger Rynold", "Robin Williams", "Ryan Reynolds"]
+    let marvelAnswers : [[String]] = [["Josh Reynolds", "Roger Rynold", "Robin Williams", "Ryan Reynolds"]]
     let correctMarvelAnswers : [String] = ["4"]
     let scienceQuestions : [String] = ["What is the first element of the periodic table?"]
-    let scienceAnswers : [String] = ["Boron", "Hydrogen", "Helium", "Calcium"]
+    let scienceAnswers : [[String]] = [["Boron", "Hydrogen", "Helium", "Calcium"]]
     let correctScienceAnswers : [String] = ["2"]
     var selectedAnswer : String = ""
     var total : [Int] = [0, 0]
@@ -40,30 +40,33 @@ class QuestionsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         submitButton.isEnabled = false
+
         if currentQuiz == "Math" {
             total[1] = mathQuestions.count
-            questionLabel.text = mathQuestions[0]
-            buttonAnswerOne.setTitle(mathAnswers[0], for: UIControl.State.normal)
-            buttonAnswerTwo.setTitle(mathAnswers[1], for: UIControl.State.normal)
-            buttonAnswerThree.setTitle(mathAnswers[2], for: UIControl.State.normal)
-            buttonAnswerFour.setTitle(mathAnswers[3], for: UIControl.State.normal)
+            questionLabel.text = mathQuestions[questionCount]
+            buttonAnswerOne.setTitle(mathAnswers[questionCount][0], for: UIControl.State.normal)
+            buttonAnswerTwo.setTitle(mathAnswers[questionCount][1], for: UIControl.State.normal)
+            buttonAnswerThree.setTitle(mathAnswers[questionCount][2], for: UIControl.State.normal)
+            buttonAnswerFour.setTitle(mathAnswers[questionCount][3], for: UIControl.State.normal)
         }
         else if currentQuiz == "Marvel Super Heroes" {
             total[1] = marvelQuestions.count
-            questionLabel.text = marvelQuestions[0]
-            buttonAnswerOne.setTitle(marvelAnswers[0], for: UIControl.State.normal)
-            buttonAnswerTwo.setTitle(marvelAnswers[1], for: UIControl.State.normal)
-            buttonAnswerThree.setTitle(marvelAnswers[2], for: UIControl.State.normal)
-            buttonAnswerFour.setTitle(marvelAnswers[3], for: UIControl.State.normal)
+            questionLabel.text = marvelQuestions[questionCount]
+            buttonAnswerOne.setTitle(marvelAnswers[questionCount][0], for: UIControl.State.normal)
+            buttonAnswerTwo.setTitle(marvelAnswers[questionCount][1], for: UIControl.State.normal)
+            buttonAnswerThree.setTitle(marvelAnswers[questionCount][2], for: UIControl.State.normal)
+            buttonAnswerFour.setTitle(marvelAnswers[questionCount][3], for: UIControl.State.normal)
         }
         else if currentQuiz == "Science" {
             total[1] = marvelQuestions.count
-            questionLabel.text = scienceQuestions[0]
-            buttonAnswerOne.setTitle(scienceAnswers[0], for: UIControl.State.normal)
-            buttonAnswerTwo.setTitle(scienceAnswers[1], for: UIControl.State.normal)
-            buttonAnswerThree.setTitle(scienceAnswers[2], for: UIControl.State.normal)
-            buttonAnswerFour.setTitle(scienceAnswers[3], for: UIControl.State.normal)
+            questionLabel.text = scienceQuestions[questionCount]
+            buttonAnswerOne.setTitle(scienceAnswers[questionCount][0], for: UIControl.State.normal)
+            buttonAnswerTwo.setTitle(scienceAnswers[questionCount][1], for: UIControl.State.normal)
+            buttonAnswerThree.setTitle(scienceAnswers[questionCount][2], for: UIControl.State.normal)
+            buttonAnswerFour.setTitle(scienceAnswers[questionCount][3], for: UIControl.State.normal)
         }
+        print("question questionCount - \(questionCount)")
+        print("question total - \(total)")
     }
     
     @IBAction func touchupAnswerOne(_ sender: UIButton) {
@@ -123,9 +126,9 @@ class QuestionsViewController: UIViewController {
         guard segue.identifier == "goToAnswer" else {return}
         let answer = segue.destination as! AnswerViewController
         if currentQuiz == "Math" {
-            answer.correctAnswer = mathAnswers[Int(correctMathAnswers[0])! - 1]
-            answer.question = mathQuestions[0]
-            if selectedAnswer == correctMathAnswers[0] {
+            answer.correctAnswer = mathAnswers[questionCount][Int(correctMathAnswers[questionCount])! - 1]
+            answer.question = mathQuestions[questionCount]
+            if selectedAnswer == correctMathAnswers[questionCount] {
                 answer.correct = true
             }
             else {
@@ -133,9 +136,9 @@ class QuestionsViewController: UIViewController {
             }
         }
         else if currentQuiz == "Marvel Super Heroes" {
-            answer.correctAnswer = marvelAnswers[Int(correctMarvelAnswers[0])! - 1]
-            answer.question = marvelQuestions[0]
-            if selectedAnswer == correctMarvelAnswers[0] {
+            answer.correctAnswer = marvelAnswers[questionCount][Int(correctMarvelAnswers[questionCount])! - 1]
+            answer.question = marvelQuestions[questionCount]
+            if selectedAnswer == correctMarvelAnswers[questionCount] {
                 answer.correct = true
             }
             else {
@@ -143,9 +146,9 @@ class QuestionsViewController: UIViewController {
             }
         }
         else if currentQuiz == "Science" {
-            answer.correctAnswer = scienceAnswers[Int(correctScienceAnswers[0])! - 1]
-            answer.question = scienceQuestions[0]
-            if selectedAnswer == correctScienceAnswers[0] {
+            answer.correctAnswer = scienceAnswers[questionCount][Int(correctScienceAnswers[questionCount])! - 1]
+            answer.question = scienceQuestions[questionCount]
+            if selectedAnswer == correctScienceAnswers[questionCount] {
                 answer.correct = true
             }
             else {
@@ -154,6 +157,7 @@ class QuestionsViewController: UIViewController {
         }
         answer.total = total
         answer.questionCount = questionCount
+        answer.currentQuiz = currentQuiz!
     }
  
 }

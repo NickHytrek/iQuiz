@@ -94,7 +94,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ze-Te-heP">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ze-Te-heP">
                                 <rect key="frame" x="16" y="130" width="382" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -119,6 +119,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="SPx-nx-Vbe"/>
                                 </constraints>
+                                <state key="normal" title="answer 1"/>
                                 <connections>
                                     <action selector="touchupAnswerOne:" destination="B11-mP-AxQ" eventType="touchUpInside" id="gVT-ug-2Xs"/>
                                 </connections>
@@ -129,6 +130,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="04y-VZ-WUc"/>
                                 </constraints>
+                                <state key="normal" title="answer 2"/>
                                 <connections>
                                     <action selector="touchupAnswerTwo:" destination="B11-mP-AxQ" eventType="touchUpInside" id="mfK-Kg-ytz"/>
                                 </connections>
@@ -139,6 +141,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Kr2-CS-Whc"/>
                                 </constraints>
+                                <state key="normal" title="answer 3"/>
                                 <connections>
                                     <action selector="touchupAnswerThree:" destination="B11-mP-AxQ" eventType="touchUpInside" id="cQd-Eu-Vpk"/>
                                 </connections>
@@ -151,6 +154,7 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="6TE-2j-eNo"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="w5Z-O3-bAd"/>
                                 </constraints>
+                                <state key="normal" title="answer 4"/>
                                 <connections>
                                     <action selector="touchupAnswerFour:" destination="B11-mP-AxQ" eventType="touchUpInside" id="lPD-fV-sis"/>
                                 </connections>
@@ -286,6 +290,7 @@
                         <outlet property="questionLabel" destination="DWp-PY-XwH" id="L8P-dO-Ywr"/>
                         <outlet property="resultLabel" destination="pdi-ho-iQS" id="k8E-5d-M2O"/>
                         <segue destination="kQT-Fs-Ygw" kind="showDetail" identifier="goToFinish" id="gSP-A3-kLM"/>
+                        <segue destination="B11-mP-AxQ" kind="showDetail" identifier="goToNextQuestion" id="7O3-Ph-rgt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b6P-KH-Dci" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -359,6 +364,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Bzv-96-hhD"/>
+        <segue reference="7O3-Ph-rgt"/>
         <segue reference="O2d-AY-RFa"/>
     </inferredMetricsTieBreakers>
 </document>
