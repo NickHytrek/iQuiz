@@ -15,6 +15,7 @@ class QuestionsViewController: UIViewController {
     @IBOutlet weak var buttonAnswerTwo: UIButton!
     @IBOutlet weak var buttonAnswerThree: UIButton!
     @IBOutlet weak var buttonAnswerFour: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
     var currentQuiz : String? = ""
     let mathQuestions : [String] = ["What is 2 + 2?"]
     let mathAnswers : [String] = ["1", "2", "3", "4"]
@@ -22,6 +23,7 @@ class QuestionsViewController: UIViewController {
     var selectedAnswer : String = ""
     var total : [Int] = [0, 0]
     var questionCount = 0
+    var segueIdentifier : String = ""
     
     
     
@@ -31,7 +33,7 @@ class QuestionsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
+        submitButton.isEnabled = false
         if currentQuiz == "Math" {
             total[1] = mathQuestions.count
             questionLabel.text = mathQuestions[0]
@@ -48,6 +50,9 @@ class QuestionsViewController: UIViewController {
         buttonAnswerTwo.backgroundColor = UIColor.white
         buttonAnswerThree.backgroundColor = UIColor.white
         buttonAnswerFour.backgroundColor = UIColor.white
+        if submitButton.isEnabled == false {
+            submitButton.isEnabled = true
+        }
     }
     
     @IBAction func touchupAnswerTwo(_ sender: UIButton) {
@@ -56,6 +61,9 @@ class QuestionsViewController: UIViewController {
         buttonAnswerOne.backgroundColor = UIColor.white
         buttonAnswerThree.backgroundColor = UIColor.white
         buttonAnswerFour.backgroundColor = UIColor.white
+        if submitButton.isEnabled == false {
+            submitButton.isEnabled = true
+        }
     }
     
     @IBAction func touchupAnswerThree(_ sender: UIButton) {
@@ -64,6 +72,9 @@ class QuestionsViewController: UIViewController {
         buttonAnswerOne.backgroundColor = UIColor.white
         buttonAnswerTwo.backgroundColor = UIColor.white
         buttonAnswerFour.backgroundColor = UIColor.white
+        if submitButton.isEnabled == false {
+            submitButton.isEnabled = true
+        }
     }
     
     @IBAction func touchupAnswerFour(_ sender: UIButton) {
@@ -72,13 +83,22 @@ class QuestionsViewController: UIViewController {
         buttonAnswerOne.backgroundColor = UIColor.white
         buttonAnswerTwo.backgroundColor = UIColor.white
         buttonAnswerThree.backgroundColor = UIColor.white
+        if submitButton.isEnabled == false {
+            submitButton.isEnabled = true
+        }
+    }
+    @IBAction func touchupBackHome(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "backToHome", sender: self)
+        segueIdentifier = "backToHome"
     }
     
     @IBAction func touchupSubmitAnswer(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "goToAnswer", sender: nil)
+        self.performSegue(withIdentifier: "goToAnswer", sender: self)
+        segueIdentifier = "goToAnswer"
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "goToAnswer" else {return}
         let answer = segue.destination as! AnswerViewController
         answer.correctAnswer = correctMathAnswers[0]
         answer.question = mathQuestions[0]
@@ -86,4 +106,5 @@ class QuestionsViewController: UIViewController {
         answer.total = total
         answer.questionCount = questionCount
     }
+ 
 }

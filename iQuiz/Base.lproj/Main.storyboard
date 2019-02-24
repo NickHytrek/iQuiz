@@ -110,7 +110,7 @@
                                 <rect key="frame" x="16" y="49" width="85" height="30"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="showDetail" id="Zq9-Cb-8oX"/>
+                                    <action selector="touchupBackHome:" destination="B11-mP-AxQ" eventType="touchUpInside" id="2gt-Nv-YJU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1A-Q6-G56">
@@ -205,7 +205,9 @@
                         <outlet property="buttonAnswerThree" destination="EXu-Fq-aeQ" id="lcu-4K-g39"/>
                         <outlet property="buttonAnswerTwo" destination="22A-qV-BH3" id="M00-gM-ssv"/>
                         <outlet property="questionLabel" destination="0ze-Te-heP" id="Nhs-iS-xZ1"/>
+                        <outlet property="submitButton" destination="y9h-Kv-7n2" id="jfZ-rl-FCI"/>
                         <segue destination="bex-vU-jG1" kind="showDetail" identifier="goToAnswer" id="Bzv-96-hhD"/>
+                        <segue destination="BYZ-38-t0r" kind="showDetail" identifier="backToHome" id="O2d-AY-RFa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AvJ-L3-JVn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -357,6 +359,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="O2u-fb-kHm"/>
+        <segue reference="O2d-AY-RFa"/>
     </inferredMetricsTieBreakers>
 </document>
