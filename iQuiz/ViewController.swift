@@ -14,12 +14,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var popoverView: UIView!
     var quizToGoTo : String = ""
-    
     let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
     let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals mix to create explosions?!"]
     let quizImages : [UIImage] = [UIImage(named: "math")!, UIImage(named: "hero")!, UIImage(named: "science")!]
-    @IBOutlet var popoverView: UIView!
+    let url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizTitle.count
@@ -57,8 +57,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
+        downloadQuiz()
     }
 
+    func downloadQuiz () {
+        guard let downloadURL = url else {return}
+        URLSession.shared.dataTask(with: downloadURL) { (data, urlResponse, error) in
+            guard error == nil else {
+                print("error = \(error!)")
+                return
+            }
+            guard data != nil else {
+                print("no data")
+                return
+            }
+            guard urlResponse != nil else {
+                print("something is wrong with the response")
+                return
+            }
+            //let dataAsString = String(data: data!, encoding: .utf8)
+            //print(dataAsString)
+            
+            
+            
+            // TODO: Finish serializing JSON when you come back from lunch
+            do {
+                let quizzes = try JSONDecoder().decode(Quiz.self, from: data!)
+                print(quizzes)
+            }
+            catch let JSONerr{
+                print("error serializing json", JSONerr)
+            }
+            }.resume()
+    }
+    
+    
+    
     @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
         self.view.addSubview(popoverView)
         popoverView.center = self.view.center
@@ -67,5 +101,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func popoverDone(_ sender: UIButton) {
         self.popoverView.removeFromSuperview()
     }
+    
+
+}
+// Keep these for now
+struct Quiz: Decodable {
+    let title: String
+    let desc: String
+    let questions: [Questions]
+    
+    /*init(title: String, desc: String, questions: [Questions]) {
+        self.title = title
+        self.desc = desc
+        self.questions = questions
+    }*/
+    
+}
+
+struct Questions: Decodable {
+    let text: String
+    let answer: String
+    let answers: [String]
+    
+    /*init(text: String, answer: String, answers: [String]) {
+        self.text = text
+        self.answer = answer
+        self.answers = answers
+    }*/
 }
 
