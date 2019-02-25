@@ -75,21 +75,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 print("something is wrong with the response")
                 return
             }
-            //let dataAsString = String(data: data!, encoding: .utf8)
-            //print(dataAsString)
-            
-            
-            
-            // TODO: Finish serializing JSON when you come back from lunch
             do {
-                let quizzes = try JSONDecoder().decode(Quiz.self, from: data!)
-                print(quizzes)
+                let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
+                print(quizzes[0].title)
             }
             catch let JSONerr{
                 print("error serializing json", JSONerr)
             }
             }.resume()
     }
+    
+  //  func 
     
     
     
@@ -104,29 +100,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 
 }
-// Keep these for now
+// structures for ease of decoding JSON
 struct Quiz: Decodable {
     let title: String
     let desc: String
     let questions: [Questions]
-    
-    /*init(title: String, desc: String, questions: [Questions]) {
-        self.title = title
-        self.desc = desc
-        self.questions = questions
-    }*/
-    
 }
 
 struct Questions: Decodable {
     let text: String
     let answer: String
     let answers: [String]
-    
-    /*init(text: String, answer: String, answers: [String]) {
-        self.text = text
-        self.answer = answer
-        self.answers = answers
-    }*/
 }
 
