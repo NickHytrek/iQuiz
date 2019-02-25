@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
     let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals mix to create explosions?!"]
     let quizImages : [UIImage] = [UIImage(named: "math")!, UIImage(named: "hero")!, UIImage(named: "science")!]
+    @IBOutlet var popoverView: UIView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizTitle.count
@@ -55,13 +56,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        self.popoverView.layer.cornerRadius = 10
     }
 
     @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-        self.present(alert, animated: true)
+        self.view.addSubview(popoverView)
+        popoverView.center = self.view.center
+    }
+    
+    @IBAction func popoverDone(_ sender: UIButton) {
+        self.popoverView.removeFromSuperview()
     }
 }
 
