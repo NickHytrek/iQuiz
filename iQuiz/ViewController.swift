@@ -58,6 +58,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
         downloadQuiz()
+        print(UserDefaults.standard.dictionaryRepresentation())
+        let savedQuizzes = UserDefaults.standard.object(forKey: "Quizzes")
+        guard let newquiz = savedQuizzes else {
+            print("BROKEN")
+            return }
     }
 
     func downloadQuiz () {
@@ -77,15 +82,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             do {
                 let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
-                print(quizzes[0].title)
+                //print(quizzes[0].title)
             }
             catch let JSONerr{
                 print("error serializing json", JSONerr)
             }
+            UserDefaults.standard.set(data, forKey: "Quizzes")
             }.resume()
     }
     
-  //  func 
+    //func
     
     
     
