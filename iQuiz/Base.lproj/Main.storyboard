@@ -85,24 +85,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="IUA-eD-oee">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPz-Jq-xNE">
-                            <rect key="frame" x="102" y="92" width="37" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Done"/>
-                            <connections>
-                                <action selector="popoverDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ytD-rd-5uG"/>
-                            </connections>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wb6-hf-Ne6">
-                            <rect key="frame" x="88" y="0.0" width="64" height="21"/>
+                            <rect key="frame" x="88" y="15" width="64" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://tednewardsandbox.site44.com/questions.json" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PKM-nT-Tjg">
+                            <rect key="frame" x="16" y="85" width="208" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" textContentType="url"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQY-7y-2q2">
+                            <rect key="frame" x="73" y="123" width="95" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Check Now">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPz-Jq-xNE">
+                            <rect key="frame" x="98" y="195" width="45" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" name="selectedMenuItemColor" catalog="System" colorSpace="catalog"/>
+                            <state key="normal" title="Done">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="popoverDone:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ytD-rd-5uG"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <viewLayoutGuide key="safeArea" id="Um5-8d-08o"/>
@@ -389,6 +407,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="7O3-Ph-rgt"/>
-        <segue reference="O2d-AY-RFa"/>
+        <segue reference="O2u-fb-kHm"/>
     </inferredMetricsTieBreakers>
 </document>

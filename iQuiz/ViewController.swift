@@ -8,6 +8,79 @@
 
 import UIKit
 
+// structures for ease of decoding JSON
+struct Quiz: Codable {
+    let title: String
+    let desc: String
+    let questions: [Questions]
+}
+
+struct Questions: Codable {
+    let text: String
+    let answer: String
+    let answers: [String]
+}
+
+public class DataManager {
+    
+    static fileprivate func getDocumentDirectory() -> URL {
+        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            return url
+        }
+        else {
+            fatalError("Unable to access document directory")
+        }
+    }
+    // save a file
+    static func save <T:Encodable> (_ object: T, with fileName: String) {
+        let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(object)
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.removeItem(at: url)
+            }
+            FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
+            print("Does the file exist?", FileManager.default.fileExists(atPath: url.path))
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    //load a file
+    static func load <T:Decodable> (_ fileName: String, with type:T.Type) -> T {
+        let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
+        print(url.path)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            fatalError("File not found at path \(url.path)")
+        }
+        if let data = FileManager.default.contents(atPath: url.path) {
+            do {
+                let model = try JSONDecoder().decode(type, from: data)
+                return model
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+        else {
+            fatalError("Data unavailable at the specified path \(url.path)")
+        }
+    }
+    //load all files
+    static func loadAll <T:Decodable> (_ type:T.Type) -> [T] {
+        do {
+            let files = try FileManager.default.contentsOfDirectory(atPath: getDocumentDirectory().path)
+            var modelObjects = [T]()
+            for fileName in files {
+                modelObjects.append(load(fileName, with: type))
+            }
+            return modelObjects
+        } catch {
+            fatalError("Could not load any files")
+        }
+    }
+    
+}
+
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -16,10 +89,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var popoverView: UIView!
     var quizToGoTo : String = ""
-    let quizTitle : [String] = ["Mathematics", "Marvel Super Heroes", "Science"]
-    let quizSubtitle: [String] = ["Can you even add 2 and 2?", "How well do you know Deadpool?", "What chemicals mix to create explosions?!"]
-    let quizImages : [UIImage] = [UIImage(named: "math")!, UIImage(named: "hero")!, UIImage(named: "science")!]
+    //TODO: fill these out with the downloaded data from the JSON
+    let quizTitle : [String] = []
+    let quizSubtitle: [String] = []
+    let quizImages : [UIImage] = [UIImage(named: "science")!, UIImage(named: "hero")!, UIImage(named: "math")!]
     let url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
+    let fileId = UUID()
+    
+    //************************************* TableView Functions *************************************//
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quizTitle.count
@@ -44,7 +121,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             quizToGoTo = "Science"
         }
         
-        self.performSegue(withIdentifier: "quizQuestions", sender: nil)
+        self.performSegue(withIdentifier: self.fileId.uuidString, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,17 +129,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         quiz.currentQuiz = quizToGoTo
     }
     
+    //**************************************************************************//
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
         downloadQuiz()
-        print(UserDefaults.standard.dictionaryRepresentation())
-        let savedQuizzes = UserDefaults.standard.object(forKey: "Quizzes")
-        guard let newquiz = savedQuizzes else {
-            print("BROKEN")
-            return }
+        print(fileId.uuidString)
+        // TODO Figure out how to load file cause it's being saved it seems but always errors out when loaded.
     }
 
     func downloadQuiz () {
@@ -82,16 +157,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             do {
                 let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
-                //print(quizzes[0].title)
+                print(quizzes)
+                DataManager.save(quizzes, with: self.fileId.uuidString)
             }
             catch let JSONerr{
                 print("error serializing json", JSONerr)
             }
-            UserDefaults.standard.set(data, forKey: "Quizzes")
+            
             }.resume()
     }
     
-    //func
+    
     
     
     
@@ -105,17 +181,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 
-}
-// structures for ease of decoding JSON
-struct Quiz: Decodable {
-    let title: String
-    let desc: String
-    let questions: [Questions]
-}
-
-struct Questions: Decodable {
-    let text: String
-    let answer: String
-    let answers: [String]
 }
 
