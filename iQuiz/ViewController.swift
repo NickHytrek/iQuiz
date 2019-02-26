@@ -34,14 +34,18 @@ public class DataManager {
     // save a file
     static func save <T:Encodable> (_ object: T, with fileName: String) {
         let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
+        print("This is the url path", url.path)
         let encoder = JSONEncoder()
         do {
             let data = try encoder.encode(object)
             if FileManager.default.fileExists(atPath: url.path) {
+                print("removing file from given url")
                 try FileManager.default.removeItem(at: url)
             }
             FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
-            print("Does the file exist?", FileManager.default.fileExists(atPath: url.path))
+            print("Does the file exist?", FileManager.default.fileExists(atPath: url.path), url.path)
+            let newQuiz = load(fileName, with: Quiz.self)
+            print(newQuiz)
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -66,6 +70,7 @@ public class DataManager {
         }
     }
     //load all files
+    /*
     static func loadAll <T:Decodable> (_ type:T.Type) -> [T] {
         do {
             let files = try FileManager.default.contentsOfDirectory(atPath: getDocumentDirectory().path)
@@ -77,7 +82,7 @@ public class DataManager {
         } catch {
             fatalError("Could not load any files")
         }
-    }
+    }*/
     
 }
 
@@ -159,6 +164,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
                 print(quizzes)
                 DataManager.save(quizzes, with: self.fileId.uuidString)
+                print("does file exist?", FileManager.default.fileExists(atPath: self.fileId.uuidString), self.fileId.uuidString)
             }
             catch let JSONerr{
                 print("error serializing json", JSONerr)
