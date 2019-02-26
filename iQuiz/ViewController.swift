@@ -34,7 +34,7 @@ public class DataManager {
     // save a file
     static func save <T:Encodable> (_ object: T, with fileName: String) {
         let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
-        print("This is the url path", url.path)
+        //print("This is the url path", url.path)
         let encoder = JSONEncoder()
         do {
             let data = try encoder.encode(object)
@@ -44,8 +44,6 @@ public class DataManager {
             }
             FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
             print("Does the file exist?", FileManager.default.fileExists(atPath: url.path), url.path)
-            let newQuiz = load(fileName, with: Quiz.self)
-            print(newQuiz)
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -58,6 +56,7 @@ public class DataManager {
             fatalError("File not found at path \(url.path)")
         }
         if let data = FileManager.default.contents(atPath: url.path) {
+            
             do {
                 let model = try JSONDecoder().decode(type, from: data)
                 return model
@@ -93,56 +92,47 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var popoverView: UIView!
-    var quizToGoTo : String = ""
     //TODO: fill these out with the downloaded data from the JSON
-    let quizTitle : [String] = []
-    let quizSubtitle: [String] = []
+    //var quizTitle : [String] = []
+    //var quizSubtitle: [String] = []
     let quizImages : [UIImage] = [UIImage(named: "science")!, UIImage(named: "hero")!, UIImage(named: "math")!]
-    let url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
+    var quizToGoTo : Int = -1
+    var url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
     let fileId = UUID()
+    var jsonQuiz = [Quiz]()
     
     //************************************* TableView Functions *************************************//
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quizTitle.count
+        return jsonQuiz.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myCell = tableView.dequeueReusableCell(withIdentifier: "quizCell", for: indexPath)
-        myCell.textLabel?.text = quizTitle[indexPath.row]
-        myCell.detailTextLabel?.text = quizSubtitle[indexPath.row]
+        myCell.textLabel?.text = jsonQuiz[indexPath.row].title
+        myCell.detailTextLabel?.text = jsonQuiz[indexPath.row].desc
         myCell.imageView?.image = quizImages[indexPath.row]
+        print(myCell)
         return myCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            quizToGoTo = "Math"
-        }
-        else if indexPath.row == 1 {
-            quizToGoTo = "Marvel Super Heroes"
-        }
-        else {
-            quizToGoTo = "Science"
-        }
-        
-        self.performSegue(withIdentifier: self.fileId.uuidString, sender: nil)
+        quizToGoTo = indexPath.row
+        self.performSegue(withIdentifier: "quizQuestions", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let quiz = segue.destination as! QuestionsViewController
-        quiz.currentQuiz = quizToGoTo
+        //TODO Send over necessary data here
     }
     
     //**************************************************************************//
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
         downloadQuiz()
-        print(fileId.uuidString)
-        // TODO Figure out how to load file cause it's being saved it seems but always errors out when loaded.
     }
 
     func downloadQuiz () {
@@ -162,9 +152,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             do {
                 let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
-                print(quizzes)
-                DataManager.save(quizzes, with: self.fileId.uuidString)
-                print("does file exist?", FileManager.default.fileExists(atPath: self.fileId.uuidString), self.fileId.uuidString)
+                //print(quizzes)
+                //DataManager.save(quizzes, with: self.fileId.uuidString)
+                self.jsonQuiz = quizzes
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
             }
             catch let JSONerr{
                 print("error serializing json", JSONerr)
@@ -172,9 +166,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             }.resume()
     }
-    
-    
-    
     
     
     @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
