@@ -20,7 +20,7 @@ class AnswerViewController: UIViewController {
     var questionCount : Int = 0
     var correct : Bool = false
     var segueIdentifier : String = ""
-    var currentQuiz : String = ""
+    var currentQuiz : [Questions] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class AnswerViewController: UIViewController {
             print("answer total - \(total)")
             nextQuestion.questionCount = questionCount
             nextQuestion.total = total
-            nextQuestion.currentQuiz = currentQuiz
+            nextQuestion.questions = currentQuiz
         }
     }
     

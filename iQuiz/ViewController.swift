@@ -92,6 +92,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var popoverView: UIView!
+    @IBOutlet weak var urlTextField: UITextField!
     //TODO: fill these out with the downloaded data from the JSON
     //var quizTitle : [String] = []
     //var quizSubtitle: [String] = []
@@ -112,7 +113,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         myCell.textLabel?.text = jsonQuiz[indexPath.row].title
         myCell.detailTextLabel?.text = jsonQuiz[indexPath.row].desc
         myCell.imageView?.image = quizImages[indexPath.row]
-        print(myCell)
         return myCell
     }
     
@@ -124,6 +124,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let quiz = segue.destination as! QuestionsViewController
         //TODO Send over necessary data here
+        quiz.questions = jsonQuiz[quizToGoTo].questions
     }
     
     //**************************************************************************//
@@ -132,7 +133,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
-        downloadQuiz()
+        //downloadQuiz()
+        configureTextField()
     }
 
     func downloadQuiz () {
@@ -176,7 +178,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func popoverDone(_ sender: UIButton) {
         self.popoverView.removeFromSuperview()
     }
+    @IBAction func checkForQuizDownload(_ sender: UIButton) {
+        print(url!.path)
+        let newUrl = URL(string: urlTextField.text!)
+        url = newUrl
+        downloadQuiz()
+    }
     
-
+    private func configureTextField() {
+        urlTextField.delegate = self as? UITextFieldDelegate
+    }
 }
 

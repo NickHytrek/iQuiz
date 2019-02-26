@@ -80,6 +80,7 @@
                     <connections>
                         <outlet property="popoverView" destination="IUA-eD-oee" id="QkI-NL-bQR"/>
                         <outlet property="tableView" destination="NKU-j3-gil" id="Ztc-Od-RyB"/>
+                        <outlet property="urlTextField" destination="PKM-nT-Tjg" id="mtp-6I-yfL"/>
                         <segue destination="B11-mP-AxQ" kind="showDetail" identifier="quizQuestions" id="2EY-mx-KZv"/>
                     </connections>
                 </viewController>
@@ -109,6 +110,9 @@
                             <state key="normal" title="Check Now">
                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                             </state>
+                            <connections>
+                                <action selector="checkForQuizDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Om1-nY-ZJy"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPz-Jq-xNE">
                             <rect key="frame" x="98" y="195" width="45" height="30"/>
