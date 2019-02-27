@@ -21,71 +21,6 @@ struct Questions: Codable {
     let answers: [String]
 }
 
-public class DataManager {
-    
-    static fileprivate func getDocumentDirectory() -> URL {
-        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            return url
-        }
-        else {
-            fatalError("Unable to access document directory")
-        }
-    }
-    // save a file
-    static func save <T:Encodable> (_ object: T, with fileName: String) {
-        let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
-        //print("This is the url path", url.path)
-        let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(object)
-            if FileManager.default.fileExists(atPath: url.path) {
-                print("removing file from given url")
-                try FileManager.default.removeItem(at: url)
-            }
-            FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
-            print("Does the file exist?", FileManager.default.fileExists(atPath: url.path), url.path)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-    //load a file
-    static func load <T:Decodable> (_ fileName: String, with type:T.Type) -> T {
-        let url = getDocumentDirectory().appendingPathComponent(fileName, isDirectory: false)
-        print(url.path)
-        if !FileManager.default.fileExists(atPath: url.path) {
-            fatalError("File not found at path \(url.path)")
-        }
-        if let data = FileManager.default.contents(atPath: url.path) {
-            
-            do {
-                let model = try JSONDecoder().decode(type, from: data)
-                return model
-            } catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-        else {
-            fatalError("Data unavailable at the specified path \(url.path)")
-        }
-    }
-    //load all files
-    /*
-    static func loadAll <T:Decodable> (_ type:T.Type) -> [T] {
-        do {
-            let files = try FileManager.default.contentsOfDirectory(atPath: getDocumentDirectory().path)
-            var modelObjects = [T]()
-            for fileName in files {
-                modelObjects.append(load(fileName, with: type))
-            }
-            return modelObjects
-        } catch {
-            fatalError("Could not load any files")
-        }
-    }*/
-    
-}
-
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
@@ -133,8 +68,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
-        downloadQuiz()
+        //downloadQuiz()
         configureTextField()
+
     }
 
     func downloadQuiz () {
@@ -147,9 +83,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 return
             }
             do {
+                self.saveJSON(data!)
                 let quizzes = try JSONDecoder().decode([Quiz].self, from: data!)
-                //print(quizzes)
-                //DataManager.save(quizzes, with: self.fileId.uuidString)
                 self.jsonQuiz = quizzes
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -163,6 +98,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }.resume()
     }
     
+    func saveJSON(_ data: Data) {
+        let defaults = UserDefaults.standard
+        defaults.set(data, forKey: "SavedQuizzes")
+        defaults.synchronize()
+    }
+    
+    func loadJSON() -> [Quiz] {
+        var quizzes = [Quiz]()
+        if let savedQuizzes = UserDefaults.standard.object(forKey: "SavedQuizzes") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedQuizzes = try? decoder.decode([Quiz].self, from: savedQuizzes) {
+                quizzes = loadedQuizzes
+            }
+        }
+        else {
+            print("loading broken")
+            quizzes = jsonQuiz
+        }
+        return quizzes
+    }
     
     @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
         self.view.addSubview(popoverView)
