@@ -111,7 +111,7 @@ class QuestionsViewController: UIViewController {
         guard segue.identifier == "goToAnswer" else {return}
         let answer = segue.destination as! AnswerViewController
         let correctAnswerIndex = Int(questions[questionCount].answer)
-        answer.correctAnswer = questions[questionCount].answers[correctAnswerIndex!]
+        answer.correctAnswer = questions[questionCount].answers[correctAnswerIndex! - 1]
         answer.question = questions[questionCount].text
         if selectedAnswer == questions[questionCount].answer {
             answer.correct = true
