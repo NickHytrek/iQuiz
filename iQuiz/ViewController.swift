@@ -23,22 +23,17 @@ struct Questions: Codable {
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var popoverView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
-    //TODO: fill these out with the downloaded data from the JSON
-    //var quizTitle : [String] = []
-    //var quizSubtitle: [String] = []
     let quizImages : [UIImage] = [UIImage(named: "science")!, UIImage(named: "hero")!, UIImage(named: "math")!]
     var quizToGoTo : Int = -1
     var url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
     let fileId = UUID()
     var jsonQuiz = [Quiz]()
+    let network : NetworkManager = NetworkManager.sharedInstance
     
     //************************************* TableView Functions *************************************//
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jsonQuiz.count
     }
@@ -61,25 +56,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //TODO Send over necessary data here
         quiz.questions = jsonQuiz[quizToGoTo].questions
     }
-    
     //**************************************************************************//
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.popoverView.layer.cornerRadius = 10
-        //downloadQuiz()
+        downloadQuiz()
         configureTextField()
-
+        NetworkManager.isUnreachable { _ in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Offline", message: "No Internet Connection", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                //print("Loading from local storage", self.loadJSON())
+                self.jsonQuiz = self.loadJSON()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
-
+    
+    @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
+        self.view.addSubview(popoverView)
+        popoverView.center = self.view.center
+    }
+    
+    @IBAction func popoverDone(_ sender: UIButton) {
+        self.popoverView.removeFromSuperview()
+    }
+    
+    @IBAction func checkForQuizDownload(_ sender: UIButton) {
+        let newUrl = URL(string: urlTextField.text!)
+        url = newUrl
+        downloadQuiz()
+    }
+    
+//************************************* Custom Functions *************************************//
     func downloadQuiz () {
         guard let downloadURL = url else {return}
         URLSession.shared.dataTask(with: downloadURL) { (data, urlResponse, error) in
             guard error == nil && data != nil && urlResponse != nil else {
-                let alert = UIAlertController(title: "Error", message: "Something Went Wrong With the Download :(", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Something Went Wrong With the Download :(", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
                 return
             }
             do {
@@ -91,8 +114,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 
             }
-            catch let JSONerr{
-                print("error serializing json", JSONerr)
+            catch {
+                fatalError("Data is no good")
             }
             
             }.resume()
@@ -113,29 +136,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         else {
-            print("loading broken")
             quizzes = jsonQuiz
         }
         return quizzes
     }
-    
-    @IBAction func toolBarSettings(_ sender: UIBarButtonItem) {
-        self.view.addSubview(popoverView)
-        popoverView.center = self.view.center
-    }
-    
-    @IBAction func popoverDone(_ sender: UIButton) {
-        self.popoverView.removeFromSuperview()
-    }
-    @IBAction func checkForQuizDownload(_ sender: UIButton) {
-        print(url!.path)
-        let newUrl = URL(string: urlTextField.text!)
-        url = newUrl
-        downloadQuiz()
-    }
-    
+
     private func configureTextField() {
         urlTextField.delegate = self as? UITextFieldDelegate
     }
+    
+    //**************************************************************************//
 }
 

@@ -56,8 +56,6 @@ class AnswerViewController: UIViewController {
         }
         else if segueIdentifier == "goToNextQuestion" {
             let nextQuestion = segue.destination as! QuestionsViewController
-            print("answer question count - \(questionCount)")
-            print("answer total - \(total)")
             nextQuestion.questionCount = questionCount
             nextQuestion.total = total
             nextQuestion.questions = currentQuiz

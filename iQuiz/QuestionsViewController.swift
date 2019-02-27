@@ -43,15 +43,12 @@ class QuestionsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         submitButton.isEnabled = false
-        print(questions)
         total[1] = questions.count
         questionLabel.text = questions[questionCount].text
         buttonAnswerOne.setTitle(questions[questionCount].answers[0], for: .normal)
         buttonAnswerTwo.setTitle(questions[questionCount].answers[1], for: .normal)
         buttonAnswerThree.setTitle(questions[questionCount].answers[2], for: .normal)
         buttonAnswerFour.setTitle(questions[questionCount].answers[3], for: .normal)
-//        print("question questionCount - \(questionCount)")
-//        print("question total - \(total)")
     }
     
     @IBAction func touchupAnswerOne(_ sender: UIButton) {
