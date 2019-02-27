@@ -140,16 +140,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func downloadQuiz () {
         guard let downloadURL = url else {return}
         URLSession.shared.dataTask(with: downloadURL) { (data, urlResponse, error) in
-            guard error == nil else {
-                print("error = \(error!)")
-                return
-            }
-            guard data != nil else {
-                print("no data")
-                return
-            }
-            guard urlResponse != nil else {
-                print("something is wrong with the response")
+            guard error == nil && data != nil && urlResponse != nil else {
+                let alert = UIAlertController(title: "Error", message: "Something Went Wrong With the Download :(", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+                self.present(alert, animated: true)
                 return
             }
             do {
