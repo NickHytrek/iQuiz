@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9DC2F88B22264913002C2045 /* NetworkControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC2F88A22264913002C2045 /* NetworkControl.swift */; };
+		9DC2F88D22265439002C2045 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9DC2F88C22265439002C2045 /* Settings.bundle */; };
 		9DCA3890221498FB007A38AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCA388F221498FB007A38AA /* AppDelegate.swift */; };
 		9DCA3892221498FB007A38AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCA3891221498FB007A38AA /* ViewController.swift */; };
 		9DCA3895221498FB007A38AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA3893221498FB007A38AA /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 		4233994A7D8E7D2C7C16D196 /* Pods-iQuiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iQuiz.release.xcconfig"; path = "Target Support Files/Pods-iQuiz/Pods-iQuiz.release.xcconfig"; sourceTree = "<group>"; };
 		5B91A2CE34A1D5B8BE471C1D /* Pods_iQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DC2F88A22264913002C2045 /* NetworkControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkControl.swift; sourceTree = "<group>"; };
+		9DC2F88C22265439002C2045 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9DCA388C221498FB007A38AA /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DCA388F221498FB007A38AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DCA3891221498FB007A38AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				9DCA3896221498FC007A38AA /* Assets.xcassets */,
 				9DCA3898221498FC007A38AA /* LaunchScreen.storyboard */,
 				9DCA389B221498FC007A38AA /* Info.plist */,
+				9DC2F88C22265439002C2045 /* Settings.bundle */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC2F88D22265439002C2045 /* Settings.bundle in Resources */,
 				9DCA389A221498FC007A38AA /* LaunchScreen.storyboard in Resources */,
 				9DCA3897221498FC007A38AA /* Assets.xcassets in Resources */,
 				9DCA3895221498FB007A38AA /* Main.storyboard in Resources */,

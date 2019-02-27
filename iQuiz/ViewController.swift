@@ -29,7 +29,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let quizImages : [UIImage] = [UIImage(named: "science")!, UIImage(named: "hero")!, UIImage(named: "math")!]
     var quizToGoTo : Int = -1
     var url = URL(string: "http://tednewardsandbox.site44.com/questions.json")
-    let fileId = UUID()
     var jsonQuiz = [Quiz]()
     let network : NetworkManager = NetworkManager.sharedInstance
     
@@ -64,6 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.popoverView.layer.cornerRadius = 10
         downloadQuiz()
         configureTextField()
+        UserDefaults.standard.set(url, forKey: "URL")
         NetworkManager.isUnreachable { _ in
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "Offline", message: "No Internet Connection", preferredStyle: .alert)
@@ -71,6 +71,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.present(alert, animated: true, completion: nil)
                 //print("Loading from local storage", self.loadJSON())
                 self.jsonQuiz = self.loadJSON()
+                if let storedURL = UserDefaults.standard.object(forKey: "URL") as? URL {
+                    self.url = storedURL
+                }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
